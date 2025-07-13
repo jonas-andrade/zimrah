@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: "/zimrah-frontend/", // use este se estiver em https://usuario.github.io/zimrah-frontend/
+  base: "/zimrah.io/", // use este se estiver em https://usuario.github.io/zimrah-frontend/
 })
