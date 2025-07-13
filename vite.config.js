@@ -1,8 +1,7 @@
-// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: "/", // ✅ essencial para domínio próprio
+  base: "/zimrah-frontend/", // use este se estiver em https://usuario.github.io/zimrah-frontend/
 })
