@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { 
-  Music, 
-  Users, 
-  Heart, 
-  Search, 
-  Settings, 
-  User, 
-  Play, 
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Music,
+  Users,
+  Heart,
+  Search,
+  Settings,
+  User,
+  Play,
   BarChart3,
   Headphones,
   Star,
@@ -58,11 +58,17 @@ export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentMood, setCurrentMood] = useState('peaceful');
   const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
   const [currentTrack, setCurrentTrack] = useState(null);
   const [showMoodSelector, setShowMoodSelector] = useState(false);
   const [newPost, setNewPost] = useState('');
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
+  
+
+
+
+
 
   const menuItems = [
     { id: 'sanctuary', label: 'Santuário', icon: Heart },
@@ -82,54 +88,54 @@ export default function Dashboard() {
   ];
 
   const emotionalStates = [
-    { 
-      id: 'anxious', 
-      name: 'Ansiedade', 
+    {
+      id: 'anxious',
+      name: 'Ansiedade',
       color: 'from-purple-400 to-indigo-600',
       description: 'Encontre calma e tranquilidade',
       playlists: 12,
       icon: Wind,
       support: 'Respiração guiada disponível'
     },
-    { 
-      id: 'lonely', 
-      name: 'Solidão', 
+    {
+      id: 'lonely',
+      name: 'Solidão',
       color: 'from-blue-400 to-cyan-600',
       description: 'Você não está sozinho',
       playlists: 18,
       icon: Heart,
       support: 'Comunidade ativa'
     },
-    { 
-      id: 'peaceful', 
-      name: 'Paz Interior', 
+    {
+      id: 'peaceful',
+      name: 'Paz Interior',
       color: 'from-green-400 to-emerald-600',
       description: 'Cultive serenidade',
       playlists: 24,
       icon: Waves,
       support: 'Meditação sonora'
     },
-    { 
-      id: 'inspired', 
-      name: 'Inspiração', 
+    {
+      id: 'inspired',
+      name: 'Inspiração',
       color: 'from-yellow-400 to-orange-600',
       description: 'Eleve seu espírito',
       playlists: 15,
       icon: Sunrise,
       support: 'Histórias motivacionais'
     },
-    { 
-      id: 'energized', 
-      name: 'Energia', 
+    {
+      id: 'energized',
+      name: 'Energia',
       color: 'from-red-400 to-pink-600',
       description: 'Desperte sua vitalidade',
       playlists: 21,
       icon: Zap,
       support: 'Movimento consciente'
     },
-    { 
-      id: 'reflective', 
-      name: 'Reflexão', 
+    {
+      id: 'reflective',
+      name: 'Reflexão',
       color: 'from-indigo-400 to-purple-600',
       description: 'Momento de introspecção',
       playlists: 9,
@@ -139,28 +145,28 @@ export default function Dashboard() {
   ];
 
   const sanctuaryActivities = [
-    { 
+    {
       title: 'Sessão de Acolhimento Matinal',
       description: 'Começou uma jornada de 20 minutos',
       time: '8:30 hoje',
       mood: 'peaceful',
       completed: true
     },
-    { 
+    {
       title: 'Conexão com Maria S.',
       description: 'Compartilhou momento de gratidão',
       time: 'Ontem',
       mood: 'inspired',
       completed: true
     },
-    { 
+    {
       title: 'Playlist "Abraço Sonoro"',
       description: 'Criada para momentos difíceis',
       time: '2 dias atrás',
       mood: 'anxious',
       completed: false
     },
-    { 
+    {
       title: 'Círculo de Apoio',
       description: 'Participou de conversa em grupo',
       time: '3 dias atrás',
@@ -203,41 +209,144 @@ export default function Dashboard() {
       available: false
     }
   ];
+const tracks = [
+  {
+    id: 1,
+    name: 'Nada me Faltará (Salmos 23)',
+    artist: 'Gospel Soul Sessions',
+    duration: '2:59',
+    mood: 'peaceful',
+    category: 'Nature Sounds',
+    audioUrl: '/audios/salmo_23.mp3'
+  },
+  {
+    id: 2,
+    name: 'À sombra do Altíssimo (Salmos 91)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:59',
+    mood: 'anxious',
+    category: 'Meditation',
+    audioUrl: '/audios/salmo_91.mp3'
+  },
+  {
+    id: 3,
+    name: 'Como a corsa (Salmos 42)',
+    artist: 'Gospel Soul Sessions',
+    duration: '2:43',
+    mood: 'lonely',
+    category: 'Therapeutic',
+    audioUrl: '/audios/salmo_42.mp3'
+  },
+  {
+    id: 4,
+    name: 'De onde me virá o socorro? (Salmos 121)',
+    artist: 'Gospel Soul Sessions',
+    duration: '2:57',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_121.mp3'
+  },
+  {
+    id: 5,
+    name: 'Minha Luz (Salmos 27)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:51',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_27.mp3'
+  },
+  {
+    id: 6,
+    name: 'Perto dos Quebrantados (Salmos 34)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:24',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_34.mp3'
+  },
+  {
+    id: 7,
+    name: 'Minha alma tem sede (Salmos 63)',
+    artist: 'Gospel Soul Sessions',
+    duration: '2:52',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_63.mp3'
+  },
+  {
+    id: 8,
+    name: 'Das Profundezas (Salmos 130)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:22',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_130.mp3'
+  },
+  {
+    id: 9,
+    name: 'Como árvores plantada (Salmos 1)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:54',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_1.mp3'
+  },
+  {
+    id: 10,
+    name: 'Desde agora e para sempre (Salmos 121:8)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:37',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_121-8.mp3'
+  },
+  {
+    id: 11,
+    name: 'Em paz me deito (Salmos 4:8)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:00',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_4-8.mp3'
+  },
+  {
+    id: 12,
+    name: 'Não te esqueças (Salmos 103)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:12',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_103.mp3'
+  },
+  {
+    id: 13,
+    name: 'Em tua Presença (Salmos 16:11)',
+    artist: 'Gospel Soul Sessions',
+    duration: '2:34',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_16-11.mp3'
+  },
+  {
+    id: 14,
+    name: 'Mais que paz (Salmos 29:11)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:34',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_29-11.mp3'
+  },
+  {
+    id: 15,
+    name: 'Teus caminhos me sustentam (Salmos 25)',
+    artist: 'Gospel Soul Sessions',
+    duration: '3:58',
+    mood: 'energized',
+    category: 'Energizing',
+    audioUrl: '/audios/salmo_25.mp3'
+  }
+];
 
-  const tracks = [
-    { 
-      id: 1, 
-      name: 'Chuva Suave', 
-      artist: 'Sons da Natureza', 
-      duration: '3:45', 
-      mood: 'peaceful',
-      category: 'Nature Sounds'
-    },
-    { 
-      id: 2, 
-      name: 'Respiração Guiada', 
-      artist: 'Mindfulness Brasil', 
-      duration: '8:20', 
-      mood: 'anxious',
-      category: 'Meditation'
-    },
-    { 
-      id: 3, 
-      name: 'Abraço Musical', 
-      artist: 'Terapia Sonora', 
-      duration: '5:12', 
-      mood: 'lonely',
-      category: 'Therapeutic'
-    },
-    { 
-      id: 4, 
-      name: 'Energia Vital', 
-      artist: 'Movimento Consciente', 
-      duration: '4:30', 
-      mood: 'energized',
-      category: 'Energizing'
-    }
-  ];
 
   const communityPosts = [
     {
@@ -273,37 +382,37 @@ export default function Dashboard() {
   ];
 
   const journeyMilestones = [
-    { 
-      title: 'Primeira Sessão', 
-      description: 'Bem-vindo ao Zimrah!', 
+    {
+      title: 'Primeira Sessão',
+      description: 'Bem-vindo ao Zimrah!',
       date: 'Há 2 meses',
       completed: true,
       icon: Heart
     },
-    { 
-      title: '7 Dias Consecutivos', 
-      description: 'Consistência é cura', 
+    {
+      title: '7 Dias Consecutivos',
+      description: 'Consistência é cura',
       date: 'Há 1 mês',
       completed: true,
       icon: Target
     },
-    { 
-      title: 'Primeira Conexão', 
-      description: 'Conectou-se com a comunidade', 
+    {
+      title: 'Primeira Conexão',
+      description: 'Conectou-se com a comunidade',
       date: 'Há 3 semanas',
       completed: true,
       icon: Users
     },
-    { 
-      title: '30 Dias de Jornada', 
-      description: 'Um mês de crescimento', 
+    {
+      title: '30 Dias de Jornada',
+      description: 'Um mês de crescimento',
       date: 'Há 1 semana',
       completed: true,
       icon: Award
     },
-    { 
-      title: 'Mentor Emocional', 
-      description: 'Pronto para ajudar outros', 
+    {
+      title: 'Mentor Emocional',
+      description: 'Pronto para ajudar outros',
       date: 'Em progresso',
       completed: false,
       icon: Star
@@ -313,12 +422,22 @@ export default function Dashboard() {
   const playTrack = (track) => {
     setCurrentTrack(track);
     setIsPlaying(true);
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.play();
+      }
+    }, 100);
   };
+
 
   const togglePlayPause = () => {
+    if (!isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
     setIsPlaying(!isPlaying);
   };
-
   const addNotification = (message) => {
     setNotifications(prev => [...prev, { id: Date.now(), message, time: new Date() }]);
   };
@@ -333,21 +452,19 @@ export default function Dashboard() {
   const EmotionalStateCard = ({ state }) => {
     const Icon = state.icon;
     const isActive = currentMood === state.id;
-    
+
     return (
       <div
-        className={`rounded-2xl p-6 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-          isActive 
-            ? `bg-gradient-to-br ${state.color} shadow-lg` 
-            : 'bg-gray-800/50 hover:bg-gray-700/50'
-        }`}
+        className={`rounded-2xl p-6 cursor-pointer transition-all duration-300 transform hover:scale-105 ${isActive
+          ? `bg-gradient-to-br ${state.color} shadow-lg`
+          : 'bg-gray-800/50 hover:bg-gray-700/50'
+          }`}
         onClick={() => setCurrentMood(state.id)}
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-              isActive ? 'bg-white/20' : 'bg-gray-700/50'
-            }`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isActive ? 'bg-white/20' : 'bg-gray-700/50'
+              }`}>
               <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400'}`} />
             </div>
             <div>
@@ -359,15 +476,14 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-          <button 
+          <button
             onClick={(e) => {
               e.stopPropagation();
               const track = tracks.find(t => t.mood === state.id);
               if (track) playTrack(track);
             }}
-            className={`p-2 rounded-full transition-all ${
-              isActive ? 'bg-white/20 hover:bg-white/30' : 'bg-gray-700/50 hover:bg-gray-600/50'
-            }`}
+            className={`p-2 rounded-full transition-all ${isActive ? 'bg-white/20 hover:bg-white/30' : 'bg-gray-700/50 hover:bg-gray-600/50'
+              }`}
           >
             <Play className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400'}`} />
           </button>
@@ -375,9 +491,8 @@ export default function Dashboard() {
         <p className={`text-sm mb-3 ${isActive ? 'text-white/90' : 'text-gray-400'}`}>
           {state.description}
         </p>
-        <div className={`text-xs px-3 py-1 rounded-full inline-block ${
-          isActive ? 'bg-white/20 text-white' : 'bg-gray-700/50 text-gray-400'
-        }`}>
+        <div className={`text-xs px-3 py-1 rounded-full inline-block ${isActive ? 'bg-white/20 text-white' : 'bg-gray-700/50 text-gray-400'
+          }`}>
           {state.support}
         </div>
       </div>
@@ -418,7 +533,7 @@ export default function Dashboard() {
             <p className="text-gray-400 text-sm mb-3">{resource.description}</p>
             <div className="flex items-center justify-between">
               <span className="text-gray-500 text-xs">{resource.duration}</span>
-              <button 
+              <button
                 onClick={() => {
                   if (resource.available) {
                     addNotification(`Iniciando ${resource.title}...`);
@@ -426,11 +541,10 @@ export default function Dashboard() {
                     addNotification('Recurso em manutenção. Tente novamente mais tarde.');
                   }
                 }}
-                className={`text-sm font-medium transition-colors ${
-                  resource.available 
-                    ? 'text-teal-400 hover:text-teal-300' 
-                    : 'text-gray-500 cursor-not-allowed'
-                }`}
+                className={`text-sm font-medium transition-colors ${resource.available
+                  ? 'text-teal-400 hover:text-teal-300'
+                  : 'text-gray-500 cursor-not-allowed'
+                  }`}
                 disabled={!resource.available}
               >
                 {resource.available ? 'Acessar →' : 'Em breve'}
@@ -445,12 +559,11 @@ export default function Dashboard() {
   const TrackCard = ({ track }) => {
     const isCurrentTrack = currentTrack?.id === track.id;
     return (
-      <div className={`bg-gray-800/50 rounded-lg p-4 border border-gray-700/50 hover:border-teal-500/50 transition-all duration-300 ${
-        isCurrentTrack ? 'border-teal-500/50 bg-teal-500/10' : ''
-      }`}>
+      <div className={`bg-gray-800/50 rounded-lg p-4 border border-gray-700/50 hover:border-teal-500/50 transition-all duration-300 ${isCurrentTrack ? 'border-teal-500/50 bg-teal-500/10' : ''
+        }`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <button 
+            <button
               onClick={() => playTrack(track)}
               className="w-10 h-10 bg-teal-500/20 rounded-full flex items-center justify-center hover:bg-teal-500/30 transition-colors"
             >
@@ -492,11 +605,10 @@ export default function Dashboard() {
             </div>
             <p className="text-gray-300 mb-4">{post.content}</p>
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={handleLike}
-                className={`flex items-center space-x-2 px-3 py-1 rounded-full transition-colors ${
-                  liked ? 'bg-red-500/20 text-red-400' : 'bg-gray-700/50 text-gray-400 hover:text-white'
-                }`}
+                className={`flex items-center space-x-2 px-3 py-1 rounded-full transition-colors ${liked ? 'bg-red-500/20 text-red-400' : 'bg-gray-700/50 text-gray-400 hover:text-white'
+                  }`}
               >
                 <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
                 <span className="text-sm">{likes}</span>
@@ -533,7 +645,7 @@ export default function Dashboard() {
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <nav className="space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -544,11 +656,10 @@ export default function Dashboard() {
                   setActiveTab(item.id);
                   setSidebarOpen(false);
                 }}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  activeTab === item.id
-                    ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
-                }`}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeTab === item.id
+                  ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                  }`}
               >
                 <Icon className="w-5 h-5" />
                 <span className="font-medium">{item.label}</span>
@@ -577,7 +688,7 @@ export default function Dashboard() {
                 </div>
               </div>
               <p className="text-white/90 mb-6">
-                Aqui você encontra apoio emocional através da música, conexões genuínas e um ambiente de cuidado mútuo. 
+                Aqui você encontra apoio emocional através da música, conexões genuínas e um ambiente de cuidado mútuo.
                 Sua jornada de bem-estar é única e respeitada.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -612,9 +723,8 @@ export default function Dashboard() {
                 <div className="space-y-4">
                   {sanctuaryActivities.map((activity, index) => (
                     <div key={index} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-700/30 transition-colors">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                        activity.completed ? 'bg-green-500/20' : 'bg-yellow-500/20'
-                      }`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${activity.completed ? 'bg-green-500/20' : 'bg-yellow-500/20'
+                        }`}>
                         {activity.completed ? (
                           <CheckCircle className="w-4 h-4 text-green-400" />
                         ) : (
@@ -638,7 +748,7 @@ export default function Dashboard() {
                     <SupportResourceCard key={index} resource={resource} />
                   ))}
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveTab('support')}
                   className="w-full mt-4 px-4 py-2 bg-teal-500/20 text-teal-400 rounded-lg hover:bg-teal-500/30 transition-colors"
                 >
@@ -648,7 +758,7 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       case 'support':
         return (
           <div className="space-y-8">
@@ -662,7 +772,7 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       case 'immersion':
         return (
           <div className="space-y-8">
@@ -685,7 +795,7 @@ export default function Dashboard() {
                   <p className="text-sm opacity-90">Sons da natureza para relaxamento</p>
                 </div>
               </div>
-              
+
               <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
                 <h4 className="text-lg font-semibold text-white mb-4">Biblioteca de Sons</h4>
                 <div className="space-y-3">
@@ -697,13 +807,13 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       case 'community':
         return (
           <div className="space-y-8">
             <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
               <h3 className="text-xl font-semibold text-white mb-6">Comunidade de Apoio</h3>
-              
+
               {/* Post Creation */}
               <div className="bg-gray-800/50 rounded-xl p-4 mb-6">
                 <div className="flex items-start space-x-4">
@@ -727,7 +837,7 @@ export default function Dashboard() {
                           <Mic className="w-5 h-5" />
                         </button>
                       </div>
-                      <button 
+                      <button
                         onClick={handlePostSubmit}
                         className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors disabled:opacity-50"
                         disabled={!newPost.trim()}
@@ -748,13 +858,13 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       case 'journey':
         return (
           <div className="space-y-8">
             <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
               <h3 className="text-xl font-semibold text-white mb-6">Sua Jornada Emocional</h3>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <h4 className="text-lg font-medium text-white">Marcos da Jornada</h4>
@@ -762,12 +872,10 @@ export default function Dashboard() {
                     const Icon = milestone.icon;
                     return (
                       <div key={index} className="flex items-start space-x-4 p-4 rounded-lg bg-gray-800/50">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          milestone.completed ? 'bg-green-500/20' : 'bg-gray-700/50'
-                        }`}>
-                          <Icon className={`w-5 h-5 ${
-                            milestone.completed ? 'text-green-400' : 'text-gray-400'
-                          }`} />
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${milestone.completed ? 'bg-green-500/20' : 'bg-gray-700/50'
+                          }`}>
+                          <Icon className={`w-5 h-5 ${milestone.completed ? 'text-green-400' : 'text-gray-400'
+                            }`} />
                         </div>
                         <div className="flex-1">
                           <h5 className="text-white font-medium">{milestone.title}</h5>
@@ -781,7 +889,7 @@ export default function Dashboard() {
                     );
                   })}
                 </div>
-                
+
                 <div className="bg-gray-800/50 rounded-xl p-6">
                   <h4 className="text-lg font-medium text-white mb-4">Progresso Semanal</h4>
                   <div className="space-y-4">
@@ -818,13 +926,13 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       case 'profile':
         return (
           <div className="space-y-8">
             <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
               <h3 className="text-xl font-semibold text-white mb-6">Seu Perfil</h3>
-              
+
               <div className="flex items-center space-x-6 mb-8">
                 <div className="w-20 h-20 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
                   U
@@ -835,7 +943,7 @@ export default function Dashboard() {
                   <p className="text-teal-400 text-sm">Nível: Buscador de Paz</p>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-gray-800/50 rounded-xl p-4 text-center">
                   <Heart className="w-8 h-8 text-teal-400 mx-auto mb-2" />
@@ -856,13 +964,13 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       case 'settings':
         return (
           <div className="space-y-8">
             <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
               <h3 className="text-xl font-semibold text-white mb-6">Configurações</h3>
-              
+
               <div className="space-y-6">
                 <div>
                   <h4 className="text-lg font-medium text-white mb-3">Preferências de Apoio</h4>
@@ -881,7 +989,7 @@ export default function Dashboard() {
                     </label>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="text-lg font-medium text-white mb-3">Privacidade</h4>
                   <div className="space-y-3">
@@ -899,7 +1007,7 @@ export default function Dashboard() {
             </div>
           </div>
         );
-      
+
       default:
         return (
           <div className="flex items-center justify-center h-64">
@@ -919,7 +1027,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white">
       {/* Sidebar Overlay */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
@@ -937,7 +1045,7 @@ export default function Dashboard() {
                 Zimrah
               </h2>
             </div>
-            
+
             <nav className="space-y-2">
               {menuItems.map((item) => {
                 const Icon = item.icon;
@@ -945,11 +1053,10 @@ export default function Dashboard() {
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                      activeTab === item.id
-                        ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
-                        : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
-                    }`}
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeTab === item.id
+                      ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
+                      : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="font-medium">{item.label}</span>
@@ -985,9 +1092,9 @@ export default function Dashboard() {
                 />
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => setShowNotifications(!showNotifications)}
                 className="p-2 text-gray-400 hover:text-white transition-colors relative"
               >
@@ -1009,7 +1116,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           {/* Notifications Dropdown */}
           {showNotifications && (
             <div className="absolute right-6 top-16 w-80 bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-4 z-50">
@@ -1031,6 +1138,13 @@ export default function Dashboard() {
             </div>
           )}
         </header>
+        {currentTrack && (
+          <audio
+            ref={audioRef}
+            src={currentTrack.audioUrl}
+            onEnded={() => setIsPlaying(false)}
+          />
+        )}
 
         {/* Music Player */}
         {currentTrack && (
@@ -1045,12 +1159,12 @@ export default function Dashboard() {
                   <p className="text-gray-400 text-sm">{currentTrack.artist}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center space-x-4">
                 <button className="p-2 text-gray-400 hover:text-white transition-colors">
                   <SkipBack className="w-5 h-5" />
                 </button>
-                <button 
+                <button
                   onClick={togglePlayPause}
                   className="p-3 bg-teal-500 hover:bg-teal-600 rounded-full transition-colors"
                 >
@@ -1064,12 +1178,12 @@ export default function Dashboard() {
                   <SkipForward className="w-5 h-5" />
                 </button>
               </div>
-              
+
               <div className="flex items-center space-x-4">
                 <button className="p-2 text-gray-400 hover:text-white transition-colors">
                   <Volume2 className="w-5 h-5" />
                 </button>
-                <button 
+                <button
                   onClick={() => setCurrentTrack(null)}
                   className="p-2 text-gray-400 hover:text-white transition-colors"
                 >
