@@ -3,13 +3,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 
-import { useAuthStore } from './stores/authStore';
+// import { useAuthStore } from './stores/authStore'; // Não precisa mais
 
-function ProtectedRoute({ children }) {
-  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
-  return isLoggedIn ? children : <Navigate to="/login" />;
-}
- 
 export default function App() {
   return (
     <Router basename="/zimrah">
@@ -17,14 +12,7 @@ export default function App() {
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
