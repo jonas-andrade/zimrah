@@ -52,7 +52,7 @@ import {
   SortDesc,
   MoreHorizontal
 } from 'lucide-react';
-
+const base = import.meta.env.BASE_URL || '/';
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('sanctuary');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -209,6 +209,9 @@ export default function Dashboard() {
       available: false
     }
   ];
+
+  
+
 const tracks = [
   {
     id: 1,
@@ -217,7 +220,7 @@ const tracks = [
     duration: '2:59',
     mood: 'peaceful',
     category: 'Nature Sounds',
-    audioUrl: '/audios/salmo_23.mp3'
+    audioUrl: base + 'audios/salmo_23.mp3'
   },
   {
     id: 2,
@@ -226,7 +229,7 @@ const tracks = [
     duration: '3:59',
     mood: 'anxious',
     category: 'Meditation',
-    audioUrl: '/audios/salmo_91.mp3'
+    audioUrl: base + 'audios/salmo_91.mp3'
   },
   {
     id: 3,
@@ -235,7 +238,7 @@ const tracks = [
     duration: '2:43',
     mood: 'lonely',
     category: 'Therapeutic',
-    audioUrl: '/audios/salmo_42.mp3'
+    audioUrl: base + 'audios/salmo_42.mp3'
   },
   {
     id: 4,
@@ -244,7 +247,7 @@ const tracks = [
     duration: '2:57',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_121.mp3'
+    audioUrl: base + 'audios/salmo_121.mp3'
   },
   {
     id: 5,
@@ -253,7 +256,7 @@ const tracks = [
     duration: '3:51',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_27.mp3'
+    audioUrl: base + 'audios/salmo_27.mp3'
   },
   {
     id: 6,
@@ -262,7 +265,7 @@ const tracks = [
     duration: '3:24',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_34.mp3'
+    audioUrl: base + 'audios/salmo_34.mp3'
   },
   {
     id: 7,
@@ -271,7 +274,7 @@ const tracks = [
     duration: '2:52',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_63.mp3'
+    audioUrl: base + 'audios/salmo_63.mp3'
   },
   {
     id: 8,
@@ -280,7 +283,7 @@ const tracks = [
     duration: '3:22',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_130.mp3'
+    audioUrl: base + 'audios/salmo_130.mp3'
   },
   {
     id: 9,
@@ -289,7 +292,7 @@ const tracks = [
     duration: '3:54',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_1.mp3'
+    audioUrl: base + 'audios/salmo_1.mp3'
   },
   {
     id: 10,
@@ -298,7 +301,7 @@ const tracks = [
     duration: '3:37',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_121-8.mp3'
+    audioUrl: base + 'audios/salmo_121-8.mp3'
   },
   {
     id: 11,
@@ -307,7 +310,7 @@ const tracks = [
     duration: '3:00',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_4-8.mp3'
+    audioUrl: base + 'audios/salmo_4-8.mp3'
   },
   {
     id: 12,
@@ -316,7 +319,7 @@ const tracks = [
     duration: '3:12',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_103.mp3'
+    audioUrl: base + 'audios/salmo_103.mp3'
   },
   {
     id: 13,
@@ -325,7 +328,7 @@ const tracks = [
     duration: '2:34',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_16-11.mp3'
+    audioUrl: base + 'audios/salmo_16-11.mp3'
   },
   {
     id: 14,
@@ -334,7 +337,7 @@ const tracks = [
     duration: '3:34',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_29-11.mp3'
+    audioUrl: base + 'audios/salmo_29-11.mp3'
   },
   {
     id: 15,
@@ -343,9 +346,10 @@ const tracks = [
     duration: '3:58',
     mood: 'energized',
     category: 'Energizing',
-    audioUrl: '/audios/salmo_25.mp3'
+    audioUrl: base + 'audios/salmo_25.mp3'
   }
 ];
+
 
 
   const communityPosts = [
