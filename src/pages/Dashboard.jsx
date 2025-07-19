@@ -64,7 +64,8 @@ export default function Dashboard() {
   const [newPost, setNewPost] = useState('');
   const [notifications, setNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
-  
+  const groupScrollRef = useRef(null);
+
 
 
 
@@ -210,147 +211,90 @@ export default function Dashboard() {
     }
   ];
 
-  
+  const groups = {
+    'Gospel Soul Sessions': [
+      { name: 'Nada me Faltará (Salmos 23)', duration: '2:59', mood: 'peaceful', category: 'Nature Sounds', audioUrl: base + 'audios/salmo_23.mp3' },
+      { name: 'À sombra do Altíssimo (Salmos 91)', duration: '3:59', mood: 'anxious', category: 'Meditation', audioUrl: base + 'audios/salmo_91.mp3' },
+      { name: 'Como a corsa (Salmos 42)', duration: '2:43', mood: 'lonely', category: 'Therapeutic', audioUrl: base + 'audios/salmo_42.mp3' },
+      { name: 'De onde me virá o socorro? (Salmos 121)', duration: '2:57', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_121.mp3' },
+      { name: 'Minha Luz (Salmos 27)', duration: '3:51', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_27.mp3' },
+      { name: 'Perto dos Quebrantados (Salmos 34)', duration: '3:24', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_34.mp3' },
+      { name: 'Minha alma tem sede (Salmos 63)', duration: '2:52', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_63.mp3' },
+      { name: 'Das Profundezas (Salmos 130)', duration: '3:22', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_130.mp3' },
+      { name: 'Como árvores plantada (Salmos 1)', duration: '3:54', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_1.mp3' },
+      { name: 'Desde agora e para sempre (Salmos 121:8)', duration: '3:37', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_121-8.mp3' },
+      { name: 'Em paz me deito (Salmos 4:8)', duration: '3:00', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_4-8.mp3' },
+      { name: 'Não te esqueças (Salmos 103)', duration: '3:12', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_103.mp3' },
+      { name: 'Em tua Presença (Salmos 16:11)', duration: '2:34', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_16-11.mp3' },
+      { name: 'Mais que paz (Salmos 29:11)', duration: '3:34', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_29-11.mp3' },
+      { name: 'Teus caminhos me sustentam (Salmos 25)', duration: '3:58', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_25.mp3' }
+    ],
 
-const tracks = [
-  {
-    id: 1,
-    name: 'Nada me Faltará (Salmos 23)',
-    artist: 'Gospel Soul Sessions',
-    duration: '2:59',
-    mood: 'peaceful',
-    category: 'Nature Sounds',
-    audioUrl: base + 'audios/salmo_23.mp3'
-  },
-  {
-    id: 2,
-    name: 'À sombra do Altíssimo (Salmos 91)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:59',
-    mood: 'anxious',
-    category: 'Meditation',
-    audioUrl: base + 'audios/salmo_91.mp3'
-  },
-  {
-    id: 3,
-    name: 'Como a corsa (Salmos 42)',
-    artist: 'Gospel Soul Sessions',
-    duration: '2:43',
-    mood: 'lonely',
-    category: 'Therapeutic',
-    audioUrl: base + 'audios/salmo_42.mp3'
-  },
-  {
-    id: 4,
-    name: 'De onde me virá o socorro? (Salmos 121)',
-    artist: 'Gospel Soul Sessions',
-    duration: '2:57',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_121.mp3'
-  },
-  {
-    id: 5,
-    name: 'Minha Luz (Salmos 27)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:51',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_27.mp3'
-  },
-  {
-    id: 6,
-    name: 'Perto dos Quebrantados (Salmos 34)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:24',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_34.mp3'
-  },
-  {
-    id: 7,
-    name: 'Minha alma tem sede (Salmos 63)',
-    artist: 'Gospel Soul Sessions',
-    duration: '2:52',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_63.mp3'
-  },
-  {
-    id: 8,
-    name: 'Das Profundezas (Salmos 130)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:22',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_130.mp3'
-  },
-  {
-    id: 9,
-    name: 'Como árvores plantada (Salmos 1)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:54',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_1.mp3'
-  },
-  {
-    id: 10,
-    name: 'Desde agora e para sempre (Salmos 121:8)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:37',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_121-8.mp3'
-  },
-  {
-    id: 11,
-    name: 'Em paz me deito (Salmos 4:8)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:00',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_4-8.mp3'
-  },
-  {
-    id: 12,
-    name: 'Não te esqueças (Salmos 103)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:12',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_103.mp3'
-  },
-  {
-    id: 13,
-    name: 'Em tua Presença (Salmos 16:11)',
-    artist: 'Gospel Soul Sessions',
-    duration: '2:34',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_16-11.mp3'
-  },
-  {
-    id: 14,
-    name: 'Mais que paz (Salmos 29:11)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:34',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_29-11.mp3'
-  },
-  {
-    id: 15,
-    name: 'Teus caminhos me sustentam (Salmos 25)',
-    artist: 'Gospel Soul Sessions',
-    duration: '3:58',
-    mood: 'energized',
-    category: 'Energizing',
-    audioUrl: base + 'audios/salmo_25.mp3'
-  }
-];
+    'Hillsong': [
+      { name: 'Oceans (Where Feet May Fail)', duration: '5:45', category: 'Worship', audioUrl: base + 'audios/oceans.mp3' },
+      { name: 'Touch of Heaven', duration: '3:43', category: 'Worship', audioUrl: base + 'audios/touch_of_heaven.mp3' },
+      { name: 'What a Beautiful Name', duration: '5:42', category: 'Worship', audioUrl: base + 'audios/what_a_beautiful_name.mp3' },
+      { name: 'So Will I (100 Billion X)', duration: '7:00', category: 'Worship', audioUrl: base + 'audios/so_will_i.mp3' },
+      { name: 'Another in the Fire', duration: '4:43', category: 'Worship', audioUrl: base + 'audios/another_in_the_fire.mp3' }
+    ],
 
+    'Bethel Music': [
+      { name: 'It Is Well', duration: '6:30', category: 'Worship', audioUrl: base + 'audios/it_is_well.mp3' },
+      { name: 'Goodness of God', duration: '5:00', category: 'Worship', audioUrl: base + 'audios/goodness_of_god.mp3' },
+      { name: 'Raise a Hallelujah', duration: '5:00', category: 'Worship', audioUrl: base + 'audios/raise_a_hallelujah.mp3' },
+      { name: 'No Longer Slaves', duration: '6:10', category: 'Worship', audioUrl: base + 'audios/no_longer_slaves.mp3' }
+    ],
 
+    'Elevation Worship': [
+      { name: 'Graves Into Gardens', duration: '7:30', category: 'Worship', audioUrl: base + 'audios/graves_into_gardens.mp3' },
+      { name: 'Do It Again', duration: '6:30', category: 'Worship', audioUrl: base + 'audios/do_it_again.mp3' },
+      { name: 'O Come to the Altar', duration: '5:30', category: 'Worship', audioUrl: base + 'audios/o_come_to_the_altar.mp3' },
+      { name: 'RATTLE!', duration: '6:30', category: 'Worship', audioUrl: base + 'audios/rattle.mp3' }
+    ],
+
+    'Passion': [
+      { name: 'Even So Come', duration: '6:30', category: 'Worship', audioUrl: base + 'audios/even_so_come.mp3' },
+      { name: 'Glorious Day', duration: '4:30', category: 'Worship', audioUrl: base + 'audios/glorious_day.mp3' },
+      { name: 'God, You’re So Good', duration: '6:30', category: 'Worship', audioUrl: base + 'audios/god_youre_so_good.mp3' },
+      { name: 'Build My Life', duration: '5:58', category: 'Worship', audioUrl: base + 'audios/build_my_life.mp3' }
+    ],
+
+    'Jesus Culture': [
+      { name: 'Break Every Chain', duration: '8:00', category: 'Worship', audioUrl: base + 'audios/break_every_chain.mp3' },
+      { name: 'Fierce', duration: '5:30', category: 'Worship', audioUrl: base + 'audios/fierce.mp3' },
+      { name: 'Rooftops', duration: '4:30', category: 'Worship', audioUrl: base + 'audios/rooftops.mp3' },
+      { name: 'Your Love Never Fails', duration: '4:30', category: 'Worship', audioUrl: base + 'audios/your_love_never_fails.mp3' }
+    ],
+
+    'Casting Crowns': [
+      { name: 'Who Am I', duration: '5:00', category: 'Worship', audioUrl: base + 'audios/who_am_i.mp3' },
+      { name: 'Praise You In This Storm', duration: '5:00', category: 'Worship', audioUrl: base + 'audios/praise_you_in_this_storm.mp3' },
+      { name: 'Voice of Truth', duration: '5:30', category: 'Worship', audioUrl: base + 'audios/voice_of_truth.mp3' },
+      { name: 'East to West', duration: '4:30', category: 'Worship', audioUrl: base + 'audios/east_to_west.mp3' }
+    ],
+
+    'Pat Barrett': [
+      { name: 'Build My Life', duration: '5:58', category: 'Worship', audioUrl: base + 'audios/build_my_life_pat.mp3' },
+      { name: 'The Way (New Horizon)', duration: '4:20', category: 'Worship', audioUrl: base + 'audios/the_way.mp3' },
+      { name: 'Better', duration: '3:50', category: 'Worship', audioUrl: base + 'audios/better.mp3' },
+      { name: 'Canvas and Clay', duration: '4:30', category: 'Worship', audioUrl: base + 'audios/canvas_and_clay.mp3' }
+    ]
+  };
+  const groupNames = Object.keys(groups);
+
+  const [selectedGroup, setSelectedGroup] = useState(groupNames[0]);
+
+  let idCounter = 1;
+
+  const tracks = groups[selectedGroup].map(song => ({
+    id: idCounter++,
+    name: song.name,
+    artist: selectedGroup,
+    duration: song.duration,
+    mood: song.mood || 'neutral',
+    category: song.category,
+    audioUrl: song.audioUrl
+  }));
 
   const communityPosts = [
     {
@@ -674,13 +618,48 @@ const tracks = [
       </div>
     </div>
   );
+  const groupLinks = {
+    'Hillsong': 'https://www.hillsong.com',
+    'Bethel Music': 'https://www.bethelmusic.com',
+    'Elevation Worship': 'https://www.elevationworship.com',
+    'Passion': 'https://www.passionmovements.com',
+    'Jesus Culture': 'https://www.jesusculture.com',
+    'Housefires': 'https://www.housefires.com',
+    'The UPPERROOM': 'https://www.theupperroom.com',
+    'We The Kingdom': 'https://www.wethekingdom.com',
+    'Casting Crowns': 'https://www.castingcrowns.com',
+  };
+
+  const groupLogos = {
+    'Gospel Soul Sessions': 'sessions.png',
+    'Hillsong': 'hillsong.png',
+    'Bethel Music': 'bethel.png',
+    'Elevation Worship': 'elevation.png',
+    'Passion': 'passion.png',
+    'Jesus Culture': 'jesusculture.png',
+    'Housefires': 'housefires.png',
+    'The UPPERROOM': 'upperroom.png',
+    'We The Kingdom': 'wethekingdom.png',
+    'Casting Crowns': 'castingcrowns.png',
+  };
+
+  const groupThemes = {
+    'Hillsong': { from: '#1e40af', to: '#4338ca' },
+    'Bethel Music': { from: '#7e22ce', to: '#a21caf' },
+    'Elevation Worship': { from: '#0f766e', to: '#065f46' },
+    'Passion': { from: '#be185d', to: '#9d174d' },
+    'Jesus Culture': { from: '#ca8a04', to: '#b45309' },
+    'Housefires': { from: '#db2777', to: '#a21caf' },
+    'The UPPERROOM': { from: '#0891b2', to: '#0ea5e9' },
+    'We The Kingdom': { from: '#84cc16', to: '#16a34a' },
+    'Casting Crowns': { from: '#e11d48', to: '#9d174d' },
+  };
 
   const renderContent = () => {
     switch (activeTab) {
       case 'sanctuary':
         return (
           <div className="space-y-8">
-            {/* Welcome Section */}
             <div className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 backdrop-blur-sm rounded-2xl p-8 border border-teal-500/30">
               <div className="flex items-center space-x-4 mb-4">
                 <div className="w-16 h-16 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full flex items-center justify-center">
@@ -702,14 +681,12 @@ const tracks = [
               </div>
             </div>
 
-            {/* Wellbeing Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {wellbeingStats.map((stat, index) => (
                 <StatCard key={index} stat={stat} />
               ))}
             </div>
 
-            {/* Emotional States */}
             <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
               <h3 className="text-xl font-semibold text-white mb-2">Como você está se sentindo hoje?</h3>
               <p className="text-gray-400 mb-6">Escolha seu estado emocional para receber apoio personalizado</p>
@@ -720,15 +697,13 @@ const tracks = [
               </div>
             </div>
 
-            {/* Recent Activities & Support */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
                 <h3 className="text-xl font-semibold text-white mb-4">Atividades Recentes</h3>
                 <div className="space-y-4">
                   {sanctuaryActivities.map((activity, index) => (
                     <div key={index} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-700/30 transition-colors">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${activity.completed ? 'bg-green-500/20' : 'bg-yellow-500/20'
-                        }`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${activity.completed ? 'bg-green-500/20' : 'bg-yellow-500/20'}`}>
                         {activity.completed ? (
                           <CheckCircle className="w-4 h-4 text-green-400" />
                         ) : (
@@ -780,33 +755,75 @@ const tracks = [
       case 'immersion':
         return (
           <div className="space-y-8">
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
-              <h3 className="text-xl font-semibold text-white mb-6">Imersão Sonora Terapêutica</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl p-6 text-white">
-                  <Headphones className="w-8 h-8 mb-3" />
-                  <h4 className="font-semibold mb-2">Soundscapes</h4>
-                  <p className="text-sm opacity-90">Paisagens sonoras imersivas</p>
-                </div>
-                <div className="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl p-6 text-white">
-                  <Waves className="w-8 h-8 mb-3" />
-                  <h4 className="font-semibold mb-2">Frequências</h4>
-                  <p className="text-sm opacity-90">Sons binaurais para bem-estar</p>
-                </div>
-                <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl p-6 text-white">
-                  <Globe className="w-8 h-8 mb-3" />
-                  <h4 className="font-semibold mb-2">Natureza</h4>
-                  <p className="text-sm opacity-90">Sons da natureza para relaxamento</p>
-                </div>
+            <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-lg">
+              <h3 className="text-3xl font-bold text-white mb-2 tracking-tight">
+                Imersão Sonora Terapêutica
+              </h3>
+              <p className="text-gray-400 mb-8 text-lg">
+                Escolha um grupo para explorar suas músicas. Cada grupo tem uma identidade visual própria.
+              </p>
+
+              <div
+                ref={groupScrollRef}
+                onWheel={(e) => {
+                  if (groupScrollRef.current) {
+                    e.preventDefault();
+                    groupScrollRef.current.scrollBy({
+                      left: e.deltaY * 3,
+                      behavior: 'smooth',
+                    });
+                  }
+                }}
+                className="flex gap-6 overflow-x-auto pb-4 -mx-2 px-2 no-scrollbar cursor-grab snap-x snap-mandatory"
+                style={{ scrollBehavior: 'smooth' }}
+              >
+                {groupNames.map((group) => (
+                  <button
+                    key={group}
+                    onClick={() => setSelectedGroup(group)}
+                    className={`flex-shrink-0 w-64 rounded-xl shadow-lg text-white p-4 flex flex-col justify-between transition-all duration-300 transform snap-start ${selectedGroup === group
+                      ? 'scale-105 shadow-xl'
+                      : 'hover:scale-105 hover:shadow-xl opacity-80'
+                      }`}
+                    style={{
+                      background: `linear-gradient(135deg, ${groupThemes[group]?.from || '#4b5563'
+                        }, ${groupThemes[group]?.to || '#1f2937'})`,
+                    }}
+                  >
+                    <img
+                      src={`${base}logos/${groupLogos[group] || 'default.png'}`}
+                      alt={group}
+                      className="h-12 mx-auto mb-4"
+                    />
+                    <h4 className="text-xl font-semibold text-center">{group}</h4>
+                    <a
+                      href={groupLinks[group] || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-center mt-2 text-sm underline text-white/80 hover:text-white"
+                    >
+                      {(groupLinks[group] &&
+                        new URL(groupLinks[group]).hostname.replace('www.', '')) ||
+                        'site indisponível'}
+                    </a>
+                  </button>
+                ))}
               </div>
 
-              <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
-                <h4 className="text-lg font-semibold text-white mb-4">Biblioteca de Sons</h4>
-                <div className="space-y-3">
-                  {tracks.map((track) => (
-                    <TrackCard key={track.id} track={track} />
-                  ))}
-                </div>
+              <div
+                className="mt-8 space-y-4 overflow-y-auto max-h-[400px] pr-2 no-scrollbar scroll-smooth"
+              >
+                {tracks.filter(track => track.artist === selectedGroup).length > 0 ? (
+                  tracks
+                    .filter(track => track.artist === selectedGroup)
+                    .map(track => (
+                      <TrackCard key={track.id} track={track} />
+                    ))
+                ) : (
+                  <div className="text-gray-500 text-center">
+                    Nenhuma música disponível para este grupo.
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -818,7 +835,6 @@ const tracks = [
             <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50">
               <h3 className="text-xl font-semibold text-white mb-6">Comunidade de Apoio</h3>
 
-              {/* Post Creation */}
               <div className="bg-gray-800/50 rounded-xl p-4 mb-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-semibold">
@@ -853,7 +869,6 @@ const tracks = [
                 </div>
               </div>
 
-              {/* Community Posts */}
               <div className="space-y-4">
                 {communityPosts.map((post) => (
                   <CommunityPostCard key={post.id} post={post} />
@@ -876,10 +891,8 @@ const tracks = [
                     const Icon = milestone.icon;
                     return (
                       <div key={index} className="flex items-start space-x-4 p-4 rounded-lg bg-gray-800/50">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${milestone.completed ? 'bg-green-500/20' : 'bg-gray-700/50'
-                          }`}>
-                          <Icon className={`w-5 h-5 ${milestone.completed ? 'text-green-400' : 'text-gray-400'
-                            }`} />
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${milestone.completed ? 'bg-green-500/20' : 'bg-gray-700/50'}`}>
+                          <Icon className={`w-5 h-5 ${milestone.completed ? 'text-green-400' : 'text-gray-400'}`} />
                         </div>
                         <div className="flex-1">
                           <h5 className="text-white font-medium">{milestone.title}</h5>
@@ -930,6 +943,7 @@ const tracks = [
             </div>
           </div>
         );
+
 
       case 'profile':
         return (
@@ -1028,18 +1042,18 @@ const tracks = [
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
       {/* Sidebar Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <div className="hidden lg:block">
-        <div className="fixed left-0 top-0 h-full w-64 bg-gray-900/50 backdrop-blur-xl border-r border-gray-800/50">
+      <aside className="hidden lg:block">
+        <div className="fixed left-0 top-0 h-full w-64 bg-gray-900/70 backdrop-blur-md border-r border-gray-800/50 shadow-inner">
           <div className="p-6">
             <div className="flex items-center space-x-2 mb-8">
               <div className="w-8 h-8 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-full flex items-center justify-center">
@@ -1057,9 +1071,9 @@ const tracks = [
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeTab === item.id
-                      ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
-                      : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-colors duration-200 ${activeTab === item.id
+                        ? 'bg-teal-500/20 text-teal-400 border border-teal-500/30'
+                        : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
                       }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -1070,15 +1084,15 @@ const tracks = [
             </nav>
           </div>
         </div>
-      </div>
+      </aside>
 
       {/* Mobile Sidebar */}
       {sidebarOpen && <Sidebar />}
 
       {/* Main Content */}
-      <div className="lg:ml-64">
+      <div className="lg:ml-64 flex flex-col min-h-screen">
         {/* Header */}
-        <header className="bg-gray-900/50 backdrop-blur-xl border-b border-gray-800/50 sticky top-0 z-30">
+        <header className="bg-gray-900/50 backdrop-blur-md border-b border-gray-800/50 sticky top-0 z-30">
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center space-x-4">
               <button
@@ -1100,19 +1114,19 @@ const tracks = [
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="p-2 text-gray-400 hover:text-white transition-colors relative"
+                className="relative text-gray-400 hover:text-white transition-colors"
               >
                 <Bell className="w-5 h-5" />
                 {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full text-xs flex items-center justify-center text-white">
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full text-[10px] flex items-center justify-center text-white">
                     {notifications.length}
                   </span>
                 )}
               </button>
-              <button className="p-2 text-gray-400 hover:text-white transition-colors">
+              <button className="text-gray-400 hover:text-white transition-colors">
                 <MessageCircle className="w-5 h-5" />
               </button>
-              <button className="p-2 text-gray-400 hover:text-white transition-colors">
+              <button className="text-gray-400 hover:text-white transition-colors">
                 <Heart className="w-5 h-5" />
               </button>
               <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full flex items-center justify-center">
@@ -1121,9 +1135,8 @@ const tracks = [
             </div>
           </div>
 
-          {/* Notifications Dropdown */}
           {showNotifications && (
-            <div className="absolute right-6 top-16 w-80 bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-4 z-50">
+            <div className="absolute right-6 top-16 w-80 bg-gray-800 rounded-xl shadow-xl border border-gray-700 p-4 z-50 animate-fade-in">
               <h4 className="text-white font-medium mb-3">Notificações</h4>
               {notifications.length === 0 ? (
                 <p className="text-gray-400 text-sm">Nenhuma notificação</p>
@@ -1142,6 +1155,7 @@ const tracks = [
             </div>
           )}
         </header>
+
         {currentTrack && (
           <audio
             ref={audioRef}
@@ -1152,7 +1166,7 @@ const tracks = [
 
         {/* Music Player */}
         {currentTrack && (
-          <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-xl border-t border-gray-800/50 p-4 z-40">
+          <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-lg border-t border-gray-800/50 p-4 z-40">
             <div className="flex items-center justify-between max-w-screen-xl mx-auto">
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
@@ -1165,12 +1179,12 @@ const tracks = [
               </div>
 
               <div className="flex items-center space-x-4">
-                <button className="p-2 text-gray-400 hover:text-white transition-colors">
+                <button className="text-gray-400 hover:text-white transition-colors">
                   <SkipBack className="w-5 h-5" />
                 </button>
                 <button
                   onClick={togglePlayPause}
-                  className="p-3 bg-teal-500 hover:bg-teal-600 rounded-full transition-colors"
+                  className="p-3 bg-teal-500 hover:bg-teal-600 rounded-full transition-all"
                 >
                   {isPlaying ? (
                     <Pause className="w-6 h-6 text-white" />
@@ -1178,18 +1192,18 @@ const tracks = [
                     <Play className="w-6 h-6 text-white" />
                   )}
                 </button>
-                <button className="p-2 text-gray-400 hover:text-white transition-colors">
+                <button className="text-gray-400 hover:text-white transition-colors">
                   <SkipForward className="w-5 h-5" />
                 </button>
               </div>
 
               <div className="flex items-center space-x-4">
-                <button className="p-2 text-gray-400 hover:text-white transition-colors">
+                <button className="text-gray-400 hover:text-white transition-colors">
                   <Volume2 className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setCurrentTrack(null)}
-                  className="p-2 text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -1199,15 +1213,13 @@ const tracks = [
         )}
 
         {/* Page Content */}
-        <main className={`p-6 ${currentTrack ? 'pb-24' : ''}`}>
-          <div
-            key={activeTab}
-            className="animate-fade-in"
-          >
+        <main  className={`flex-1 p-6 ${currentTrack ? 'pb-24' : ''}`}>
+          <div key={activeTab} className="animate-fade-in">
             {renderContent()}
           </div>
         </main>
       </div>
     </div>
   );
+
 }
