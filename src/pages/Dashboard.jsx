@@ -619,7 +619,7 @@ export default function Dashboard() {
     </div>
   );
   const groupLinks = {
-    'Hillsong': 'https://www.hillsong.com',
+    'Hillsong UNITED': 'https://www.hillsong.com',
     'Bethel Music': 'https://www.bethelmusic.com',
     'Elevation Worship': 'https://www.elevationworship.com',
     'Passion': 'https://www.passionmovements.com',
@@ -632,7 +632,7 @@ export default function Dashboard() {
 
   const groupLogos = {
     'Gospel Soul Sessions': 'sessions.png',
-    'Hillsong': 'hillsong.png',
+    'Hillsong UNITED': 'hillsong.png',
     'Bethel Music': 'bethel.png',
     'Elevation Worship': 'elevation.png',
     'Passion': 'passion.png',
@@ -644,7 +644,7 @@ export default function Dashboard() {
   };
 
   const groupThemes = {
-    'Hillsong': { from: '#1e40af', to: '#4338ca' },
+    'Hillsong UNITED': { from: '#1e40af', to: '#4338ca' },
     'Bethel Music': { from: '#7e22ce', to: '#a21caf' },
     'Elevation Worship': { from: '#0f766e', to: '#065f46' },
     'Passion': { from: '#be185d', to: '#9d174d' },
