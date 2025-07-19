@@ -230,7 +230,7 @@ export default function Dashboard() {
       { name: 'Teus caminhos me sustentam (Salmos 25)', duration: '3:58', mood: 'energized', category: 'Energizing', audioUrl: base + 'audios/salmo_25.mp3' }
     ],
 
-    'Hillsong': [
+    'Hillsong UNITED': [
       { name: 'Oceans (Where Feet May Fail)', duration: '5:45', category: 'Worship', audioUrl: base + 'audios/oceans.mp3' },
       { name: 'Touch of Heaven', duration: '3:43', category: 'Worship', audioUrl: base + 'audios/touch_of_heaven.mp3' },
       { name: 'What a Beautiful Name', duration: '5:42', category: 'Worship', audioUrl: base + 'audios/what_a_beautiful_name.mp3' },
